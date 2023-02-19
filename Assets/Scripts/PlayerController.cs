@@ -41,8 +41,8 @@ public class PlayerController : MonoBehaviour
         rb.velocity = Accelerate(rb.velocity, direction);
         rb.velocity = Gravity(rb.velocity);
 
-        // if (Input.GetKey(KeyCode.Space) && IsGrounded())
-        //     rb.velocity = Jump(rb.velocity);
+        if (Input.GetKey(KeyCode.Space) && IsGrounded())
+            rb.velocity = Jump(rb.velocity);
     }
 
     Vector3 Jump(Vector3 velocity)
@@ -66,17 +66,5 @@ public class PlayerController : MonoBehaviour
         Color col = IsGrounded() ? Color.green : Color.red;
         Gizmos.color = col;
         Gizmos.DrawWireSphere(groundCheck.position, groundDistance);
-    }
-
-   void OnCollisionEnter(Collision other)
-    {
-        if(other.gameObject.layer == LayerMask.NameToLayer("Lava"))
-        {
-            SceneManager.LoadScene(0);
-        }
-         if(other.gameObject.layer == LayerMask.NameToLayer("Win"))
-        {
-            SceneManager.LoadScene(1);
-        }
     }
 }

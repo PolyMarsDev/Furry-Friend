@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+
+   
     [SerializeField] float speed;
+
     float xRot;
     float yRot;
 
@@ -25,4 +28,5 @@ public class CameraController : MonoBehaviour
     {
         transform.eulerAngles = new Vector3(xRot, yRot, 0);
     }
+
 }
