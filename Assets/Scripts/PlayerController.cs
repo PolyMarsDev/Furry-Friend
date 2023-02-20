@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] float acceleration;
+
+    [SerializeField] float sprintAcceleration;
     [SerializeField] float drag;
     [SerializeField] float jumpForce;
 
@@ -18,7 +20,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] LayerMask groundLayer;
 
     private Rigidbody rb;
-    
+
+    public bool sprint;
+
 
     private float xInput, zInput;
 
@@ -31,6 +35,8 @@ public class PlayerController : MonoBehaviour
     {
         xInput = Input.GetAxisRaw("Horizontal");
         zInput = Input.GetAxisRaw("Vertical");
+
+        sprint = Input.GetKey(KeyCode.LeftShift);
     }
     void FixedUpdate()
     {
@@ -39,6 +45,7 @@ public class PlayerController : MonoBehaviour
         direction.y = 0;
 
         rb.velocity = Accelerate(rb.velocity, direction);
+
         rb.velocity = Gravity(rb.velocity);
 
         if (Input.GetKey(KeyCode.Space) && IsGrounded())
@@ -52,7 +59,7 @@ public class PlayerController : MonoBehaviour
     }
     Vector3 Accelerate(Vector3 velocity, Vector3 direction)
     {
-        return velocity + (direction * acceleration * Time.fixedDeltaTime) - (velocity*drag);
+        return velocity + (direction * (sprint ? sprintAcceleration : acceleration) * Time.fixedDeltaTime) - (velocity*drag);
     }
 
     Vector3 Gravity(Vector3 velocity)

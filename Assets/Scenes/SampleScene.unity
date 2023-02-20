@@ -254,9 +254,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebb055244db5b7741b8b75796e15e988, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bobSpeed: 0.8
-  bobIntensity: 0.035
+  sprintBobSpeed: 0.3
+  bobSpeed: 0.4
+  bobIntensity: 0.01
   playerRb: {fileID: 373117263}
+  playerController: {fileID: 373117264}
 --- !u!1 &367940234
 GameObject:
   m_ObjectHideFlags: 0
@@ -350,9 +352,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf5dd3e9173126b48a6d5673769ad849, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  acceleration: 10
+  acceleration: 15
+  sprintAcceleration: 30
   drag: 0.075
-  jumpForce: 5
+  jumpForce: 8
   gravity: -18
   orientation: {fileID: 330585546}
   groundCheck: {fileID: 1337711687}
@@ -360,6 +363,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
+  sprint: 0
 --- !u!136 &373117265
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -647,7 +651,7 @@ Transform:
   m_GameObject: {fileID: 1071865001}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.892, y: 0.27, z: 1.786642}
-  m_LocalScale: {x: 4.0582, y: 4.0582, z: 4.0582}
+  m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -813,9 +817,9 @@ GameObject:
   - component: {fileID: 1523716378}
   - component: {fileID: 1523716377}
   - component: {fileID: 1523716376}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -891,7 +895,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1523716375}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.37, y: 1.23, z: 1.3135614}
+  m_LocalPosition: {x: -9.12, y: 1.23, z: 0.81356144}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1011,7 +1015,7 @@ GameObject:
   - component: {fileID: 1920115192}
   - component: {fileID: 1920115191}
   m_Layer: 5
-  m_Name: RawImage
+  m_Name: Cursor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1050,7 +1054,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.5019608}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
