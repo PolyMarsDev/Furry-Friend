@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour
         return velocity + Vector3.up*gravity*Time.fixedDeltaTime;
     }
     
-    bool IsGrounded() => Physics.CheckSphere(groundCheck.position, groundDistance, groundLayer);
+    public bool IsGrounded() => Physics.CheckSphere(groundCheck.position, groundDistance, groundLayer);
     void OnDrawGizmos()
     {
         Color col = IsGrounded() ? Color.green : Color.red;

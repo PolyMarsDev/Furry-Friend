@@ -11,6 +11,8 @@ public class CameraController : MonoBehaviour
     float xRot;
     float yRot;
 
+    public float startingRotY;
+
     Ray RayOrigin;
     RaycastHit HitInfo;
 
@@ -23,6 +25,9 @@ public class CameraController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
 
         lockView = false;
+
+        startingRotY = transform.localEulerAngles.y;
+
     }
     void Update()
     {
@@ -41,14 +46,20 @@ public class CameraController : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.E))
                 {
-                    if (lockView)
+                    // if (lockView)
+                    // {
+                    //     lockView = false;
+                    // }
+                    // else
+                    // {
+                    //     lockView = true;
+                    //     targetObject = HitInfo.transform.gameObject;
+                    // }
+                    Debug.Log("interactable pressed");
+                    if (HitInfo.transform.gameObject.GetComponent<AnimationTrigger>() != null)
                     {
-                        lockView = false;
-                    }
-                    else
-                    {
-                        lockView = true;
-                        targetObject = HitInfo.transform.gameObject;
+                        Debug.Log("anim trigger ran");
+                        HitInfo.transform.gameObject.GetComponent<AnimationTrigger>().Trigger();
                     }
                 }
             }
@@ -57,16 +68,17 @@ public class CameraController : MonoBehaviour
 
     void LateUpdate()
     {
-        if (!lockView)
-        {
-            transform.eulerAngles = new Vector3(xRot, yRot, 0);
-        }
-        else
-        {
-            SmoothLookAt(targetObject.transform.position - transform.position);
-            xRot = transform.eulerAngles.x;
-            yRot = transform.eulerAngles.y;
-        }
+        // if (!lockView)
+        // {
+            transform.eulerAngles = new Vector3(0, yRot + startingRotY, 0);
+            transform.GetChild(0).transform.localEulerAngles = new Vector3(xRot, 0, 0);
+        // }
+        // else
+        // {
+        //     SmoothLookAt(targetObject.transform.position - transform.position);
+        //     xRot = transform.eulerAngles.x;
+        //     yRot = transform.eulerAngles.y;
+        // }
     }
 
     void SmoothLookAt(Vector3 newDirection)

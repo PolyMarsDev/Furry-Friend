@@ -29,7 +29,7 @@ public class FootstepManager : MonoBehaviour
     {
         Vector3 playerVelocity = new Vector3(playerRb.velocity.x, 0, playerRb.velocity.z);
 
-        if (playerVelocity.magnitude > 1 && globalTimer > interval)
+        if (playerController.IsGrounded() && playerVelocity.magnitude > 1 && globalTimer > interval)
         {
             RandomSoundEffect(footsteps);
             globalTimer = 0;
