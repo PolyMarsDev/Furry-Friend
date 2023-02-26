@@ -8,7 +8,7 @@ Furry Friend is a horror game made in 48 hours for [Ludwig Jam 2023](https://itc
 
 ## Background
 
-You forgot to take your height-enhancing pills. Your cat, Coots, is hungry. Good luck.
+You forgot to take your height-enhancing pills. Your pet cat, Coots, is hungry. Good luck.
 
 ## Usage
 ### Releases
