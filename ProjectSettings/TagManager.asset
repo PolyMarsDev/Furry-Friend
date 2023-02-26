@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Interactable
+  - Pill
+  - LeftMonitor
   layers:
   - Default
   - TransparentFX

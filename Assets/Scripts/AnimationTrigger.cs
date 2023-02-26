@@ -8,5 +8,6 @@ public class AnimationTrigger : MonoBehaviour
     public void Trigger()
     {
         anim.SetTrigger("Trigger");
+        tag = "Untagged";
     }
 }

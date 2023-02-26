@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-    [SerializeField] AudioClip[] playerDeath;
-    [SerializeField] AudioClip[] destroy;
-    [SerializeField] AudioClip[] charge;
-    [SerializeField] AudioClip[] shoot;
-
-    [SerializeField] AudioClip[] jump;
+    [SerializeField] AudioClip[] consume;
 
     // Music player components
-	[SerializeField] AudioSource MusicSource;
+    [SerializeField] AudioSource MusicSource;
 
 	// Random pitch adjustment range.
 	[SerializeField] float LowPitchRange = .95f;
@@ -34,9 +29,6 @@ public class SoundManager : MonoBehaviour
 		{
 			Destroy(gameObject);
 		}
-
-		//Set SoundManager to DontDestroyOnLoad so that it won't be destroyed when reloading our scene.
-		DontDestroyOnLoad (gameObject);
 	}
 
 	// Play a single clip through the sound effects source.
@@ -68,29 +60,11 @@ public class SoundManager : MonoBehaviour
         Destroy(audioSource, audioSource.clip.length);
     }
 
-    public void PlayPlayerDeath()
-    {
-        RandomSoundEffect(playerDeath);
+    public void PlayConsume()
+	{
+        RandomSoundEffect(consume);
     }
 
-    public void PlayDestroy()
-    {
-        RandomSoundEffect(destroy);
-    }
 
-    public void PlayCharge()
-    {
-        RandomSoundEffect(charge);
-    }
-
-    public void PlayShoot()
-    {
-        RandomSoundEffect(shoot);
-    }
-
-    public void PlayJump()
-    {
-        RandomSoundEffect(jump);
-    }
 	
 }

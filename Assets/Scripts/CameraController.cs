@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class CameraController : MonoBehaviour
 {
 
-   
+    [SerializeField] Image image;
     [SerializeField] float speed;
 
     float xRot;
@@ -18,6 +20,8 @@ public class CameraController : MonoBehaviour
 
     bool lockView;
     GameObject targetObject;
+
+    int pillCount = 0;
 
     void Start()
     {
@@ -39,11 +43,22 @@ public class CameraController : MonoBehaviour
             xRot = Mathf.Clamp(xRot, -90, 90);
         }
 
-        
+
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out HitInfo, 100.0f))
         {
-            if (HitInfo.transform.gameObject.tag == "Interactable")
+            if (HitInfo.transform.gameObject.tag == "Interactable" || HitInfo.transform.gameObject.tag == "Pill" || HitInfo.transform.gameObject.tag == "LeftMonitor")
             {
+                if (HitInfo.transform.gameObject.GetComponent<InteractionMessage>() != null)
+                {
+                    string text = HitInfo.transform.gameObject.GetComponent<InteractionMessage>().Text;
+                    UIManager.Instance.setInteractionPromptText(text);
+                    UIManager.Instance.setInteractionPromptVisibility(true);
+                }
+                else
+                {
+                    UIManager.Instance.setInteractionPromptVisibility(false);
+                }
+
                 if (Input.GetKeyDown(KeyCode.E))
                 {
                     // if (lockView)
@@ -55,15 +70,38 @@ public class CameraController : MonoBehaviour
                     //     lockView = true;
                     //     targetObject = HitInfo.transform.gameObject;
                     // }
-                    Debug.Log("interactable pressed");
                     if (HitInfo.transform.gameObject.GetComponent<AnimationTrigger>() != null)
                     {
-                        Debug.Log("anim trigger ran");
                         HitInfo.transform.gameObject.GetComponent<AnimationTrigger>().Trigger();
+                    }
+                    if (HitInfo.transform.gameObject.tag == "Pill")
+                    {
+                        Destroy(HitInfo.transform.gameObject);
+                        pillCount++;
+                        UIManager.Instance.setObjectiveText("Consume Your Height Enhancing Pills (" + pillCount + "/8)");
+                        if (!UIManager.Instance.objectiveText.enabled)
+                        {
+                            UIManager.Instance.objectiveText.enabled = true;
+                            //playSound
+                        }
+                         SoundManager.Instance.PlayConsume();
+                        if (pillCount == 8)
+                        {
+                            StartCoroutine("FadeEffect");
+                        }
+                    }
+                    if (HitInfo.transform.gameObject.tag == "LeftMonitor")
+                    {
+                        HitInfo.transform.gameObject.GetComponent<InteractionMessage>().Text = "You can't quit. You are addicted.";
                     }
                 }
             }
+            else
+            {
+                UIManager.Instance.setInteractionPromptVisibility(false);
+            }
         }
+    
     }
 
     void LateUpdate()
@@ -84,6 +122,21 @@ public class CameraController : MonoBehaviour
     void SmoothLookAt(Vector3 newDirection)
     {
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(newDirection), Time.deltaTime*10);
+    }
+
+    private IEnumerator FadeEffect()
+    {
+        float fadeCount = 0; //initial alpha value
+
+        while (fadeCount < 1.0f)
+        {
+            fadeCount += 0.01f; //lower alpha value 0.01 per 0.01 second 
+            yield return new WaitForSeconds(0.01f); //per 0.01 second
+            image.color = new Color(0, 0, 0, fadeCount); //makes image look transparent  
+        }
+        //after while loop ends, load EndingCredit scene
+         SceneManager.LoadScene(1);
+
     }
 
 }
