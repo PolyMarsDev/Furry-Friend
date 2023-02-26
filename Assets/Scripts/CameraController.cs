@@ -10,6 +10,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] Image image;
     [SerializeField] float speed;
 
+    [SerializeField] GameObject player;
     float xRot;
     float yRot;
 
@@ -46,7 +47,7 @@ public class CameraController : MonoBehaviour
 
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out HitInfo, 100.0f))
         {
-            if (HitInfo.transform.gameObject.tag == "Interactable" || HitInfo.transform.gameObject.tag == "Pill" || HitInfo.transform.gameObject.tag == "LeftMonitor")
+            if (Vector3.Distance(player.transform.position, HitInfo.transform.gameObject.transform.position) < 5 && (HitInfo.transform.gameObject.tag == "Interactable" || HitInfo.transform.gameObject.tag == "Pill" || HitInfo.transform.gameObject.tag == "LeftMonitor"))
             {
                 if (HitInfo.transform.gameObject.GetComponent<InteractionMessage>() != null)
                 {
